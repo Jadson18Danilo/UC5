@@ -1,3 +1,12 @@
-const produtos = []
-
-export default produtos
+import dotenv from 'dotenv'
+import pg from 'pg'
+const { Pool } = pg
+dotenv.config()
+const client = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.BD_HOST,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME
+})
+export default client

@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import routeProduto  from "./src/modules/produto/routes/produto.route.js"
+import "./src/config/criar_tabela.js"
 
 dotenv.config()
 
