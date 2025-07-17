@@ -66,10 +66,6 @@ class ProdutoController {
           .status(404)
           .json({ mensagem: "Produto não encontrado!" });
       }
-
-      produto.nome = novoNome || produto.nome
-      produto.preco = novoPreco || produto.preco
-      produto.descricao = novaDescricao || produto.descricao
       resposta.status(200).json({ mensagem: "Produto atualizado com sucesso" });
 
     } catch (error) {
@@ -84,7 +80,7 @@ class ProdutoController {
   static async deletarPorId(requisicao, resposta) {
     try {
 
-      const id = parseInt(req.params.id)
+      const id = parseInt(requisicao.params.id)
       const produto = await ProdutoModel.deletarPorId(id)
 
       if (!produto.length === 0) {

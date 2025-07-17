@@ -20,11 +20,15 @@ class ProdutoModel {
     const resultado = await client.query(consulta, dados)
     return resultado.rows
   }
-  static async atualizar(novoNome, novoPreco, novaDescricao) {
-    const dados = [novoNome, novoPreco, novaDescricao]
-    const consulta = `update produtos set nome = $2, preco = $3, descricao = $4, where id = $1 returning *;`
+  static async atualizar(id, novoNome, novoPreco, novaDescricao) {
+    const dados = [novoNome, novoPreco, novaDescricao, id]
+    const consulta = `update produto 
+    set nome = coalesce($1, nome),
+    preco = coalesce($2, preco), 
+    descricao = coalesce($3, descricao) 
+    where id = $4 returning *;`
     const resultado = await client.query(consulta, dados)
-    return resultado
+    return resultado.rows
     }
  
   static async deletarPorId(id) {

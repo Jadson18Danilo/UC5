@@ -9,7 +9,9 @@ const app = express()
 const port = process.env.PORTA
 
 app.use(express.json())
-app.use(routeProduto)
+
+// /api/produtos
+app.use('/api',routeProduto)
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`)
