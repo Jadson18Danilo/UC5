@@ -113,6 +113,18 @@ class ProdutoController {
       });
     }
   }
+
+  static async totalProdutos(requisicao, resposta) {
+    try {
+      const total = await ProdutoModel.totalProdutos();
+      resposta.status(200).json(total);
+    } catch (error) {
+      resposta.status(500).json({
+        mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
+        erro: error.message,
+      });
+    }
+  }
 }
 
 export default ProdutoController;

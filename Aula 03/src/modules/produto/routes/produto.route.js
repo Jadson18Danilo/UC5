@@ -21,4 +21,7 @@ router.delete("/produto/deletar/:id", ProdutoController.deletarPorId);
 // Deletar todos os produtos
 router.delete("/produto/deletar", ProdutoController.deletarTodos);
 
+// Contar total de produtos
+router.get("/produto/total", ProdutoController.totalProdutos);
+
 export default router;

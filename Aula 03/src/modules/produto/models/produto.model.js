@@ -40,6 +40,11 @@ class ProdutoModel {
     const consulta = `delete from produto`
     await client.query(consulta)
   }
+  static async totalProdutos() {
+    const consulta = `select count(*) from produto`
+    const resultado = await client.query(consulta)
+    return resultado.rows
+  }
 }
 
 export default ProdutoModel;
