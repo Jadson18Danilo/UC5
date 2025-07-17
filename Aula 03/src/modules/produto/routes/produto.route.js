@@ -4,10 +4,10 @@ import ProdutoController from "../controllers/produto.controller.js";
 const router = express.Router();
 
 // Listar todos os produtos
-router.get("/produtos", ProdutoController.listarTodos);
+router.get("/produtos/listar", ProdutoController.listarTodos);
 
 // Listar produto por id
-router.get("/produtos/:id", ProdutoController.listarPorId);
+router.get("/produtos/listar/:id", ProdutoController.listarPorId);
 
 // Cadastrar um produto
 router.post("/produto/cadastrar", ProdutoController.cadastrar);
