@@ -10,7 +10,7 @@ class ProdutoController {
           .status(400)
           .json({ mensagem: "Todos os campos são obrigatorios!" });
       }
-      ProdutoModel.cadastrar(id, nome, preco, descricao);
+      ProdutoModel.cadastrar( nome, preco, descricao);
       resposta.status(201).json({ mensagem: "Produto criado com sucesso!" });
     } catch (error) {
       resposta.status(500).json({
@@ -66,7 +66,12 @@ class ProdutoController {
           .status(404)
           .json({ mensagem: "Produto não encontrado!" });
       }
+
+      produto.nome = novoNome || produto.nome
+      produto.preco = novoPreco || produto.preco
+      produto.descricao = novaDescricao || produto.descricao
       resposta.status(200).json({ mensagem: "Produto atualizado com sucesso" });
+
     } catch (error) {
       resposta.status(500).json({
         mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
@@ -78,16 +83,17 @@ class ProdutoController {
   // Deleta um produto pelo ID
   static async deletarPorId(requisicao, resposta) {
     try {
-      const id = parseInt(requisicao.params.id);
-      const produto = ProdutoModel.deletarPorId(id); 
-      if (produto === null) {
+
+      const id = parseInt(req.params.id)
+      const produto = ProdutoModel.deletarPorId(id)
+
+      if (!produto.length === 0) {
         return resposta
           .status(404)
           .json({ mensagem: "Produto não encontrado!" });
       }
-      resposta.status(200).json({ 
-        mensagem: "Produto excluido com sucesso!", 
-        produtoExcluido: produto 
+      return resposta.status(200).json({ 
+        mensagem: "Produto excluido com sucesso!"
       });
     } catch (error) {
       resposta.status(500).json({

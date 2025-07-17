@@ -22,7 +22,7 @@ class ProdutoModel {
   }
   static async atualizar(novoNome, novoPreco, novaDescricao) {
     const dados = [novoNome, novoPreco, novaDescricao]
-    const consulta = `update produto set nome_curso = $1 where id = $2 returning *`
+    const consulta = `update produtos set nome = $2, preco = $3, descricao = $4, where id = $1 returning *;`
     const resultado = await client.query(consulta, dados)
     return resultado
     }
