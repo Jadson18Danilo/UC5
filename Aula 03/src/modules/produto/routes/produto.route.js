@@ -19,6 +19,6 @@ router.patch("/produto/atualizar/:id", ProdutoController.atualizar);
 router.delete("/produto/deletar/:id", ProdutoController.deletarPorId);
 
 // Deletar todos os produtos
-router.delete("/produtos", ProdutoController.deletarTodos);
+router.delete("/produtos/deletar", ProdutoController.deletarTodos);
 
 export default router;
