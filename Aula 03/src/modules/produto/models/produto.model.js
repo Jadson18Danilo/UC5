@@ -34,7 +34,7 @@ class ProdutoModel {
   static async deletarPorId(id) {
     const dados = [id]
     const consulta = `delete from produto where id = $1`
-    return client.query(consulta, dados)
+    await client.query(consulta, dados)
   }
   static async deletarTodos() {
     const consulta = `delete from produto`
