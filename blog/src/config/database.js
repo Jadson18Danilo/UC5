@@ -29,7 +29,7 @@ async function sincronizar(params){
   try {
     await sequelize.authenticate();
     console.log('Conexão realizada com sucesso!');
-    await sequelize.sync({force: false, alter: false})
+    await sequelize.sync({force: true, alter: true})
     console.log('Tabelas criada com sucesso.');
   } catch (error) {
     console.error('Unable to connect to the database:', error.message);

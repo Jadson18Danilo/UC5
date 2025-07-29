@@ -1,0 +1,153 @@
+### Arquivo de testes para API de Produtos
+### Para usar este arquivo, instale a extensão "REST Client" no VSCode
+### Servidor local: http://localhost:3000
+
+# Variável base URL
+@baseURL = http://localhost:3000
+
+###
+
+# 1. Cadastrar um produto
+POST {{baseURL}}/produto/cadastrar
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Notebook Dell",
+  "preco": 2500.99,
+  "descricao": "Notebook Dell Inspiron 15 com 8GB RAM e SSD 256GB"
+}
+
+###
+
+# 2. Cadastrar outro produto
+POST {{baseURL}}/produto/cadastrar
+Content-Type: application/json
+
+{
+  "id": 2,
+  "nome": "Mouse Logitech",
+  "preco": 89.90,
+  "descricao": "Mouse óptico sem fio Logitech MX Master 3"
+}
+
+###
+
+# 3. Cadastrar terceiro produto
+POST {{baseURL}}/produto/cadastrar
+Content-Type: application/json
+
+{
+  "id": 3,
+  "nome": "Teclado Mecânico",
+  "preco": 299.99,
+  "descricao": "Teclado mecânico gamer RGB com switches blue"
+}
+
+###
+
+# 4. Listar todos os produtos
+GET {{baseURL}}/produtos
+
+###
+
+# 5. Listar produto por ID específico (ID = 1)
+GET {{baseURL}}/produtos/1
+
+###
+
+# 6. Listar produto por ID específico (ID = 2)
+GET {{baseURL}}/produtos/2
+
+###
+
+# 7. Listar produto que não existe (ID = 999)
+GET {{baseURL}}/produtos/999
+
+###
+
+# 8. Atualizar um produto (ID = 1)
+PATCH {{baseURL}}/produto/atualizar/1
+Content-Type: application/json
+
+{
+  "novoNome": "Notebook Dell Atualizado",
+  "novoPreco": 2699.99,
+  "novaDescricao": "Notebook Dell Inspiron 15 com 16GB RAM e SSD 512GB - ATUALIZADO"
+}
+
+###
+
+# 9. Atualizar parcialmente um produto (ID = 2) - apenas preço
+PATCH {{baseURL}}/produto/atualizar/2
+Content-Type: application/json
+
+{
+  "novoPreco": 99.90
+}
+
+###
+
+# 10. Verificar se as atualizações foram aplicadas
+GET {{baseURL}}/produtos
+
+###
+
+# 11. Deletar um produto específico (ID = 3)
+DELETE {{baseURL}}/produto/deletar/3
+
+###
+
+# 12. Verificar se o produto foi deletado
+GET {{baseURL}}/produtos
+
+###
+
+# 13. Tentar deletar produto que não existe (ID = 999)
+DELETE {{baseURL}}/produto/deletar/999
+
+###
+
+# 14. Deletar todos os produtos
+DELETE {{baseURL}}/produtos
+
+###
+
+# 15. Verificar se todos os produtos foram deletados
+GET {{baseURL}}/produtos
+
+###
+
+# 16. Teste de erro - Cadastrar produto sem todos os campos obrigatórios
+POST {{baseURL}}/produto/cadastrar
+Content-Type: application/json
+
+{
+  "id": 4,
+  "nome": "Produto Incompleto"
+}
+
+###
+
+# 17. Teste de erro - Cadastrar produto com ID duplicado (depois de recriar um produto)
+POST {{baseURL}}/produto/cadastrar
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Primeiro Produto",
+  "preco": 100.00,
+  "descricao": "Descrição do primeiro produto"
+}
+
+###
+
+POST {{baseURL}}/produto/cadastrar
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Produto Duplicado",
+  "preco": 200.00,
+  "descricao": "Tentativa de criar produto com ID duplicado"
+}

@@ -51,8 +51,8 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../../config/database.js";
 
-const ProdutoModel = sequelize.define(
-  "Produto",
+const UsuarioModel = sequelize.define(
+  "Usuario",
   {
     // Model attributes are defined here
     id: {
@@ -65,8 +65,8 @@ const ProdutoModel = sequelize.define(
       allowNull: false,
       validate: {
         len: {
-          args: [3, 50],
-          msg: "O nome deve ter entre 3 e 50 caracteres.",
+          args: [2, 100],
+          msg: "O nome deve ter entre 2 e 100 caracteres.",
         },
         is: {
           args: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s]+$/,
@@ -77,23 +77,61 @@ const ProdutoModel = sequelize.define(
         },
       },
     },
-    preco: {
-      type: DataTypes.DECIMAL(5, 2),
+    email: {
+      type: DataTypes.STRING,
       allowNull: false,
+      unique: {
+        args: 'unique_email',
+        msg: "Este email já está cadastrado.",
+      },
       validate: {
-        isDecimal: {
-          msg: "O preço do produto deve ser no formato (valor . casa decimal).",
+        isEmail: {
+          msg: "O email deve ser um endereço de email válido.",
         },
-        isNumeric: {
-          msg: "O preço deve ser um número.",
-        },
-        isMenor(value) {
-          if (value === null && value <= 0) {
-            throw new Error("O preço deve ser maior que zero.");
-          }
+        notEmpty: {
+          msg: "O email não pode ser vazio.",
         },
       },
     },
+    senha: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        min: {
+          args: 8,
+          msg: "A senha deve ter no mínimo 8 caracteres.",
+        },
+        notEmpty: {
+          msg: "A senha não pode ser vazia.",
+        },
+      },
+    },
+    foto_perfil:{
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isUrl: {
+          msg: "A foto de perfil deve ser uma URL válida.",
+        },
+      },
+    },
+    // preco: {
+    //   type: DataTypes.DECIMAL(5, 2),
+    //   allowNull: false,
+    //   validate: {
+    //     isDecimal: {
+    //       msg: "O preço do produto deve ser no formato (valor . casa decimal).",
+    //     },
+    //     isNumeric: {
+    //       msg: "O preço deve ser um número.",
+    //     },
+    //     isMenor(value) {
+    //       if (value === null && value <= 0) {
+    //         throw new Error("O preço deve ser maior que zero.");
+    //       }
+    //     },
+    //   },
+    // },
     descricao: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -109,10 +147,9 @@ const ProdutoModel = sequelize.define(
     },
   },
   {
-    tableName: "produto",
     createdAt: "criado_em",
     updatedAt: "atualizando_em",
   }
 );
 
-export default ProdutoModel;
+export default UsuarioModel;

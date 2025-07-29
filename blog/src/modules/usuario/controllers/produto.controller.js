@@ -1,18 +1,18 @@
 import { where } from "sequelize";
-import ProdutoModel from "../models/produto.model.js";
+import UsuarioModel from "../models/usuario.model.js";
 
-class ProdutoController {
-  // Cadastra um novo produto
+class UsuarioController {
+  // Cadastra um novo Usuario
   static async cadastrar(requisicao, resposta) {
     try {
-      const { nome, preco, descricao } = requisicao.body;
-      if ( !nome || !preco || !descricao) {
+      const { nome, preco, descricao, email, senha, foto_perfil } = requisicao.body;
+      if ( !nome || !preco || !descricao || !email || !senha || !foto_perfil) {
         return resposta
           .status(400)
           .json({ mensagem: "Todos os campos são obrigatorios!" });
       }
-      await ProdutoModel.create({ nome, preco, descricao});
-      resposta.status(201).json({ mensagem: "Produto criado com sucesso!" });
+      await UsuarioModel.create({ nome, preco, descricao, email, senha, foto_perfil });
+      resposta.status(201).json({ mensagem: "Usuario criado com sucesso!" });
     } catch (error) {
       resposta.status(500).json({
         mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
@@ -21,14 +21,14 @@ class ProdutoController {
     }
   }
 
-  // Lista todos os produtos
+  // Lista todos os Usuarios
   static async listarTodos(requisicao, resposta) {
     try {
-      const produtos = await ProdutoModel.findAll();
-      if (!produtos || produtos.length === 0) {
+      const Usuarios = await UsuarioModel.findAll();
+      if (!Usuarios || Usuarios.length === 0) {
         return resposta.status(200).json({ mensagem: "Banco de dados vazio!" });
       }
-      resposta.status(200).json(produtos);
+      resposta.status(200).json(Usuarios);
     } catch (error) {
       resposta.status(500).json({
         mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
@@ -37,17 +37,17 @@ class ProdutoController {
     }
   }
 
-  // Lista um produto pelo ID
+  // Lista um Usuario pelo ID
   static async listarPorId(requisicao, resposta) {
     try {
       const id = requisicao.params.id;
-      const produto = await ProdutoModel.findByPk(id);
-      if (!produto) {
+      const Usuario = await UsuarioModel.findByPk(id);
+      if (!Usuario) {
         return resposta
           .status(404)
-          .json({ mensagem: "Produto não encontrado!" });
+          .json({ mensagem: "Usuario não encontrado!" });
       }
-      resposta.status(200).json(produto);
+      resposta.status(200).json(Usuario);
     } catch (error) {
       resposta.status(500).json({
         mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
@@ -56,23 +56,23 @@ class ProdutoController {
     }
   }
 
-  // Atualiza um produto pelo ID
+  // Atualiza um Usuario pelo ID
   static async atualizar(requisicao, resposta) {
     try {
       const { nome, preco, descricao } = requisicao.body;
       const id = requisicao.params.id
-      const produto = await ProdutoModel.update({
+      const Usuario = await UsuarioModel.update({
         nome,
         preco,
         descricao
       }, {where:{ id }}
     );
-      if (!produto || produto.length === 0) {
+      if (!Usuario || Usuario.length === 0) {
         return resposta
           .status(404)
-          .json({ mensagem: "Produto não encontrado!" });
+          .json({ mensagem: "Usuario não encontrado!" });
       }
-      resposta.status(200).json({ mensagem: "Produto atualizado com sucesso" });
+      resposta.status(200).json({ mensagem: "Usuario atualizado com sucesso" });
 
     } catch (error) {
       resposta.status(500).json({
@@ -82,20 +82,20 @@ class ProdutoController {
     }
   }
 
-  // Deleta um produto pelo ID
+  // Deleta um Usuario pelo ID
   static async deletarPorId(requisicao, resposta) {
     try {
 
       const id = requisicao.params.id
-      const produto = await ProdutoModel.destroy({where:{ id }});
+      const Usuario = await UsuarioModel.destroy({where:{ id }});
 
-      if (!produto.length === 0) {
+      if (!Usuario.length === 0) {
         return resposta
           .status(404)
-          .json({ mensagem: "Produto não encontrado!" });
+          .json({ mensagem: "Usuario não encontrado!" });
       }
       return resposta.status(200).json({ 
-        mensagem: "Produto excluido com sucesso!"
+        mensagem: "Usuario excluido com sucesso!"
       });
     } catch (error) {
       resposta.status(500).json({
@@ -105,13 +105,13 @@ class ProdutoController {
     }
   }
 
-  // Deleta todos os produtos
+  // Deleta todos os Usuarios
   static async deletarTodos(requisicao, resposta) {
     try {
-      await ProdutoModel.destroy({truncate: true});
+      await UsuarioModel.destroy({truncate: true});
       resposta
         .status(200)
-        .json({ mensagem: "Todos os produtos foram deletados!" });
+        .json({ mensagem: "Todos os Usuarios foram deletados!" });
     } catch (error) {
       resposta.status(500).json({
         mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
@@ -120,9 +120,9 @@ class ProdutoController {
     }
   }
 
-  static async totalProdutos(requisicao, resposta) {
+  static async totalUsuarios(requisicao, resposta) {
     try {
-      const total = await ProdutoModel.count();
+      const total = await UsuarioModel.count();
       resposta.status(200).json(total);
     } catch (error) {
       resposta.status(500).json({
@@ -133,4 +133,4 @@ class ProdutoController {
   }
 }
 
-export default ProdutoController;
+export default UsuarioController;
