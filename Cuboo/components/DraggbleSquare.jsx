@@ -39,9 +39,16 @@ export default function DraggbleSquare(){
 
     //fim do gesto Pan
 
+    //Gesto de toque(tap)
+
+    const tapGesture = Gesture.Tap().onEnd(()=>{
+        backgroundColor.value = backgroundColor.value === "#3498db" ? "#e74c3c" : "#3498db"
+    })
+
     const composedGesture = Gesture.Simultaneous(
-        Gesture.Exclusive(panGesture),
+        Gesture.Exclusive(panGesture, tapGesture),
     );
+    //fim do gesto tap
     
     const animatedStyle = useAnimatedStyle(() => ({
         transform:[
